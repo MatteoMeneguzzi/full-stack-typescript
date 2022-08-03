@@ -8,7 +8,27 @@ interface Result {
   average: number;
 }
 
-const calculateExercises = (arr: Array<number>, target: number): Result => {
+const evaluateArguments = (args: Array<string>) => {
+  let target = Number(args[2]);
+
+  if (args.length < 3) throw new Error(`Not enough arguments`);
+
+  let values: number[] = [];
+
+  for (let index = 2; index < args.length; index++) {
+    const element = args[index];
+
+    if (!isNaN(Number(element))) {
+      values.push(Number(element));
+    } else {
+      throw new Error('Provided values were not numbers');
+    }
+  }
+
+  return { target: values[0], array: values.slice(1) };
+};
+
+const calculateExercises = (arr: Array<number>, target: number) => {
   let periodLength: number = arr.length;
 
   let training: Array<number> = [];
@@ -50,7 +70,7 @@ const calculateExercises = (arr: Array<number>, target: number): Result => {
 
   if (average >= target) success = true;
 
-  return {
+  console.log({
     periodLength: periodLength,
     trainingDays: trainingDays,
     success: success,
@@ -58,7 +78,17 @@ const calculateExercises = (arr: Array<number>, target: number): Result => {
     ratingDescription: ratingDescription,
     target: target,
     average: average,
-  };
+  });
 };
 
-console.log(calculateExercises([3, 0, 2, 4.5, 0, 3, 1], 2));
+try {
+  const { target, array } = evaluateArguments(process.argv);
+
+  calculateExercises(array, target);
+} catch (error: unknown) {
+  let errorMessage = 'Something bad happened';
+  if (error instanceof Error) {
+    errorMessage += ' Error: ' + error.message;
+  }
+  console.log(errorMessage);
+}
