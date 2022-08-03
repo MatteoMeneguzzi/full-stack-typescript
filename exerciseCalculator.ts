@@ -1,15 +1,15 @@
-interface Result {
-  periodLength: number;
-  trainingDays: number;
-  success: boolean;
-  rating: number;
-  ratingDescription: string;
-  target: number;
-  average: number;
-}
+// interface Result {
+//   periodLength: number;
+//   trainingDays: number;
+//   success: boolean;
+//   rating: number;
+//   ratingDescription: string;
+//   target: number;
+//   average: number;
+// }
 
 const evaluateArguments = (args: Array<string>) => {
-  let target = Number(args[2]);
+  // let target = Number(args[2]);
 
   if (args.length < 3) throw new Error(`Not enough arguments`);
 
@@ -28,7 +28,7 @@ const evaluateArguments = (args: Array<string>) => {
   return { target: values[0], array: values.slice(1) };
 };
 
-const calculateExercises = (arr: Array<number>, target: number) => {
+export const calculateExercises = (arr: Array<number>, target: number) => {
   let periodLength: number = arr.length;
 
   let training: Array<number> = [];
